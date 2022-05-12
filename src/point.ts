@@ -48,4 +48,37 @@ class Point {
          div(delta: number): Point {
             return new Point(this.x / delta, this.y / delta);
         }
+    
+    /**Return the length of the point */
+    length(): number{
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+
+    /** Calculate the Euclidean distance to other */
+    dist(other: Point): number{
+        const dx: number = this.x - other.x;
+        const dy: number = this.y - other.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    /**  */
+    normalize(): Point {
+        const len: number = this.length();
+        return new Point(this.x / len, this.y / len);
+    }
+
+    /**Rotate a point
+     * @param {number} angle The amount to rotate in radians
+     * @param {Point} [center] The point to rotate around. Defaults to (0, 0)
+     */
+    rotate(angle: number, center?: Point){
+        if(typeof center === 'undefined'){
+            center = new Point(0, 0);
+        }
+
+        const p = this.subtract(center);
+        const newX = p.x * Math.cos(angle) - p.y * Math.sin(angle);
+        const newY = p.x * Math.sin(angle) + p.y * Math.cos(angle);
+        return new Point(newX, newY).add(center);
+    }
 }
