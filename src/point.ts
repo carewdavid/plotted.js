@@ -1,7 +1,7 @@
 /**
  * @classdesc A 2d point
  */
-class Point {
+export class Point {
     x: number;
     y: number;
 
