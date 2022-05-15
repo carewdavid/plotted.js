@@ -16,7 +16,7 @@ module.exports = {
     },
     mode: 'development',
     output: {
-        filename: 'bundle.js',
+        filename: 'plotted.js',
         path: path.resolve(__dirname, 'dist')
     }
 
