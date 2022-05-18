@@ -1,7 +1,7 @@
 import {Point} from './point'
 import {Properties} from './properties'
 
-class Line extends Properties{
+export class Line extends Properties{
     start: Point;
     end: Point;
 
