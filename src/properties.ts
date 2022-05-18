@@ -1,8 +1,9 @@
 
 /**@classdesc 
- * Parent calss to manage the attributes shared by most SVG objects, e.g. fill and stroke
+ * Parent class to manage the attributes shared by most SVG objects, e.g. fill and stroke.
 */
 export class Properties{
+    //We store everyting in a map
     attributes: Map<string, string>;
 
     constructor(){
@@ -30,10 +31,11 @@ export class Properties{
     }
 
     /**Render the objects properties to a string for SVG export*/
-    properties(){
+    properties(): string{
         let props: string = "";
         for(let [k, v] of this.attributes){
             props += `${k}="${v}"`
         }
+        return props;
     }
 }
