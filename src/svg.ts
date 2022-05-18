@@ -3,7 +3,9 @@ import {Line} from './line';
 
 
 
-export default class SVG {
+
+    
+class SVG {
     width: number;
     height: number;
     objects: any[];
@@ -50,4 +52,9 @@ export default class SVG {
         this.objects.push(l);
         return l;
     }
+}
+export default {
+    SVG: SVG,
+    Point: Point,
+    Line: Line
 }
