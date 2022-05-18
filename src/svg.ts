@@ -1,6 +1,9 @@
 import {Point} from './point';
+import {Line} from './line';
 
-export class SVG {
+
+
+export default class SVG {
     width: number;
     height: number;
     objects: any[];
@@ -39,5 +42,12 @@ export class SVG {
         for(let object of this.objects){
             object.draw(this.canvas);
         }
+    }
+
+    line(start, end): Line{
+        let l = new Line(start, end);
+        l.stroke('black');
+        this.objects.push(l);
+        return l;
     }
 }
