@@ -1,5 +1,6 @@
 import {Point} from './point';
 import {Line} from './line';
+import {Rect} from './rect'
 
 
 
@@ -52,9 +53,18 @@ class SVG {
         this.objects.push(l);
         return l;
     }
+
+    rect(pos: Point, width: number, height: number): Rect{
+        let r = new Rect(pos, width, height);
+        r.stroke('black');
+        r.fill('none');
+        this.objects.push(r);
+        return r;
+    }
 }
 export default {
     SVG: SVG,
     Point: Point,
-    Line: Line
+    Line: Line,
+    Rect: Rect
 }
