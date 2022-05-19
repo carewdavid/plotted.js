@@ -11,23 +11,27 @@ export class Properties{
     }
 
     /**Set fill style */
-    fill(fillStyle: string){
+    fill(fillStyle: string): Properties{
         this.attributes.set('fill', fillStyle);
+        return this;
     }
 
     /**Set stroke style */
-    stroke(strokeStyle: string){
+    stroke(strokeStyle: string): Properties{
         this.attributes.set('stroke', strokeStyle);
+        return this;
     }
 
     /**Set stroke width */
-    strokeWidth(width: number){
+    strokeWidth(width: number): Properties{
         this.attributes.set('strokeWidth', width.toString());
+        return this;
     }
 
     /**Add a generic attribute */
-    addAttribute(attribute: string, value: string){
+    addAttribute(attribute: string, value: string): Properties{
         this.attributes.set(attribute, value);
+        return this;
     }
 
     /**Render the objects properties to a string for SVG export*/
