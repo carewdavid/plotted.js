@@ -1,6 +1,7 @@
 import {Point} from './point';
 import {Line} from './line';
-import {Rect} from './rect'
+import {Rect} from './rect';
+import {Path} from './path';
 
 
 
@@ -61,10 +62,19 @@ class SVG {
         this.objects.push(r);
         return r;
     }
+
+    path(start?: Point): Path{
+        let p = new Path(start);
+        p.stroke('black');
+        p.fill('none');
+        this.objects.push(p);
+        return p;
+    }
 }
 export default {
     SVG: SVG,
     Point: Point,
     Line: Line,
-    Rect: Rect
+    Rect: Rect,
+    Path: Path
 }
