@@ -81,4 +81,11 @@ export class Point {
         const newY = p.x * Math.sin(angle) + p.y * Math.cos(angle);
         return new Point(newX, newY).add(center);
     }
+
+    /**Create a unit vector with the given angle*/
+    static fromAngle(angle: number): Point{
+        const x = Math.cos(angle);
+        const y = Math.sin(angle);
+        return new Point(x, y);
+    }
 }
