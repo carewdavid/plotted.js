@@ -4,8 +4,14 @@ import {Rect} from './rect';
 import {Path} from './path';
 
 
-
-
+//Constants for physical distances
+const INCH: number = 96;
+const FOOT: number = INCH * 12
+const MILE: number = FOOT * 5280
+const CENTIMETER: number = 37.795
+const MILLIMETER: number = CENTIMETER * .1
+const METER: number = CENTIMETER * 100
+const KILOMETER: number = METER * 1000
     
 class SVG {
     width: number;
@@ -14,14 +20,6 @@ class SVG {
     canvas: CanvasRenderingContext2D;
     origin: Point;
     center: Point;
-
-    static readonly INCH: number = 96;
-    static readonly FOOT: number = this.INCH * 12
-    static readonly MILE: number = this.FOOT * 5280
-    static readonly CENTIMETER: number = 37.795
-    static readonly MILLIMETER: number = this.CENTIMETER * .1
-    static readonly METER: number = this.CENTIMETER * 100
-    static readonly KILOMETER: number = this.METER * 1000
 
     constructor(width: number, height: number, canvas: CanvasRenderingContext2D){
         this.width = width;
@@ -76,5 +74,14 @@ export default {
     Point: Point,
     Line: Line,
     Rect: Rect,
-    Path: Path
+    Path: Path,
+
+    IN: INCH,
+    FT: FOOT,
+    MI: MILE,
+    MM: MILLIMETER,
+    CM: CENTIMETER,
+    M: METER,
+    KM: KILOMETER,
+
 }
