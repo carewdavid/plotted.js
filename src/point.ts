@@ -88,4 +88,9 @@ export class Point {
         const y = Math.sin(angle);
         return new Point(x, y);
     }
+
+    /**Create a copy of the point */
+    copy(): Point{
+        return new Point(this.x, this.y);
+    }
 }
