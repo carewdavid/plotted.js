@@ -37,13 +37,18 @@ export class Path extends Properties{
     commands: PathCommand[];
     vertices: Point[];
 
-    constructor(start?: Point){
+    constructor(start: Point | Point[] | undefined){
         super();
         this.commands = [];
         this.vertices = [];
 
-        if(start !== undefined){
+        if(start instanceof Point){
             this.moveTo(start);
+        }else if(start instanceof Array){
+            this.moveTo(start[0]);
+            for(let i = 1; i < start.length; i++){
+                this.lineTo(start[i]);
+            }
         }
     }
 
