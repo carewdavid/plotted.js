@@ -78,6 +78,7 @@ export class Path extends Properties{
     draw(canvas: CanvasRenderingContext2D){
         canvas.fillStyle = this.attributes.get("fill");
         canvas.strokeStyle = this.attributes.get("stroke");
+        canvas.lineWidth = Number.parseFloat(this.attributes.get("strokeWidth"));
         canvas.beginPath();
         for(let cmd of this.commands){
             switch(cmd.kind){
