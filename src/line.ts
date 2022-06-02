@@ -17,6 +17,7 @@ export class Line extends Properties{
 
     draw(canvas: CanvasRenderingContext2D){
         canvas.strokeStyle = this.attributes.get('stroke');
+        canvas.lineWidth = Number.parseFloat(this.attributes.get('strokeWidth'));
         canvas.beginPath();
         canvas.moveTo(this.start.x, this.start.y);
         canvas.lineTo(this.end.x, this.end.y);
