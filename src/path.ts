@@ -36,6 +36,7 @@ type PathCommand = MoveCmd | LineCmd | CurveCmd | BezierCmd | CloseCmd;
 export class Path extends Properties{
     commands: PathCommand[];
     vertices: Point[];
+    path?: Path2D;
 
     constructor(start: Point | Point[] | undefined){
         super();
@@ -49,7 +50,7 @@ export class Path extends Properties{
             for(let i = 1; i < start.length; i++){
                 this.lineTo(start[i]);
             }
-        }
+        } 
     }
 
     _renderCommands(): string{
@@ -76,25 +77,15 @@ export class Path extends Properties{
     }
 
     draw(canvas: CanvasRenderingContext2D){
-        canvas.fillStyle = this.attributes.get("fill");
-        canvas.strokeStyle = this.attributes.get("stroke");
-        canvas.lineWidth = Number.parseFloat(this.attributes.get("strokeWidth"));
-        canvas.beginPath();
-        for(let cmd of this.commands){
-            switch(cmd.kind){
-                case "move": canvas.moveTo(cmd.target.x, cmd.target.y);
-                break;
-                case "line": canvas.lineTo(cmd.target.x, cmd.target.y);
-                break;
-                case "curve": canvas.quadraticCurveTo(cmd.control.x, cmd.control.y, cmd.target.x, cmd.target.y);
-                break;
-                case "bezier": canvas.bezierCurveTo(cmd.control1.x, cmd.control1.y, cmd.control2.x, cmd.control2.y, cmd.target.x, cmd.target.y);
-                break;
-                case "close": canvas.closePath();
-                break;
-            }
+        canvas.strokeStyle = this.attributes.get("stroke") || 'black';
+        canvas.lineWidth = Number.parseFloat(this.attributes.get("strokeWidth")) || 1;
+        this.path = new Path2D(this._renderCommands());
+        canvas.stroke(this.path);
+        const fill = this.attributes.get('fill') || 'none';
+        if(fill !== 'none'){
+            canvas.fillStyle = fill;
+            canvas.fill(this.path);
         }
-        canvas.stroke();
     }
 
 
