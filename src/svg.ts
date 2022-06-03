@@ -68,6 +68,11 @@ class SVG {
         this.objects.push(p);
         return p;
     }
+
+    addChild(object: any): any {
+        this.objects.push(object);
+        return object;
+    }
 }
 export default {
     SVG: SVG,
