@@ -29,7 +29,7 @@ export class Rect extends Properties{
         this.se = position.add(horizontal).add(vertical);
 
         this.strokePath = new Path([this.nw, this.ne, this.se, this.sw]).close();
-
+        this.strokePath.attributes = this.attributes; //Send changes to our attributes to the underlying Path
     }
 
     exportSVG(): string{
@@ -37,10 +37,6 @@ export class Rect extends Properties{
     }
 
     draw(canvas: CanvasRenderingContext2D){
-        canvas.fillStyle = this.attributes.get('fill');
-        canvas.fillRect(this.position.x, this.position.y, this.width, this.height);
-        this.strokePath.fill('none')
-        this.strokePath.stroke(this.attributes.get('stroke'));
         this.strokePath.draw(canvas);
     }
 }
