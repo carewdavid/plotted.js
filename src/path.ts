@@ -73,7 +73,7 @@ export class Path extends Properties{
     }
 
     exportSVG(): string{
-        return `<path ${this.properties()} d="${this._renderCommands()}"`;
+        return `<path ${this.properties()} d="${this._renderCommands()}"/>`;
     }
 
     draw(canvas: CanvasRenderingContext2D){
