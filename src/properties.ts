@@ -38,7 +38,7 @@ export class Properties{
     properties(): string{
         let props: string = "";
         for(let [k, v] of this.attributes){
-            props += `${k}="${v}"`
+            props += ` ${k}="${v}"`
         }
         return props;
     }
