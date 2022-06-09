@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry : './src/svg.ts',
+    entry : './src/plotted.ts',
     target: 'web',
     module: {
         rules: [
