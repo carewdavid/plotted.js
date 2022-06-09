@@ -10,6 +10,10 @@ export class Line extends Properties{
         this.start = start;
         this.end = end;
     }
+    
+    length(): number{
+        return this.start.dist(this.end);
+    }
 
     exportSVG(): string{
         return `<line x1="${this.start.x}" y1="${this.start.y}" x2="${this.end.x}" y2="${this.end.y}" ${this.properties()}/>`
