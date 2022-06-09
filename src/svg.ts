@@ -2,21 +2,13 @@ import {Point} from './point';
 import {Line} from './line';
 import {Rect} from './rect';
 import {Path} from './path';
+//import {Group} from './group';
 
-
-//Constants for physical distances
-const INCH: number = 96;
-const FOOT: number = INCH * 12
-const MILE: number = FOOT * 5280
-const CENTIMETER: number = 37.795
-const MILLIMETER: number = CENTIMETER * .1
-const METER: number = CENTIMETER * 100
-const KILOMETER: number = METER * 1000
-    
-class SVG {
+export class SVG {
     width: number;
     height: number;
-    objects: any[];
+    layers: Map<string, group>;
+    currentGroup: group;
     canvas: CanvasRenderingContext2D;
     origin: Point;
     center: Point;
@@ -27,29 +19,43 @@ class SVG {
         this.origin = new Point(0, 0);
         this.center = new Point(width / 2, height / 2);
         this.canvas = canvas;
-        this.objects = [];
+        //Intuitively, we'd have to use an array to store the layers since the order matters.
+        //Fortuneately, javascript actually does define an ordering for elements of a map.
+        //They're in order of insertion, just what we want.
+        //Using an array would have been less than ideal, since looking up layers in setGroup
+        //could potentially happen in a tight loop.
+        this.layers = new Map();
+        this.setGroup('background');
     }
 
     exportSVG(): string {
         let header = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="${this.width}" height="${this.height}">`;
         let body = '';
-        for(let object of this.objects){
-            body = body.concat(object.exportSVG());
+        for(let [_, layer] of this.layers){
+            let groupString = `<g inkscape:groupmode="layer" inkscape:label="${layer.id}" id="${layer.id}">`
+            for(let object of layer.objects){
+                groupString += object.exportSVG();
+            }
+            groupString += '</g>';
+            body += groupString;
         }
         let footer = '</svg>';
         return header + body + footer;
     }
 
     draw(){
-        for(let object of this.objects){
-            object.draw(this.canvas);
+        for(let layer of this.layers.values()){
+            console.log(`Drawing ${layer.id}...`);
+            for(let object of layer.objects){
+                object.draw(this.canvas);
+            }
         }
     }
 
     line(start, end): Line{
         let l = new Line(start, end);
         l.stroke('black');
-        this.objects.push(l);
+        this.currentGroup.objects.push(l);
         return l;
     }
 
@@ -57,7 +63,7 @@ class SVG {
         let r = new Rect(pos, width, height);
         r.stroke('black');
         r.fill('none');
-        this.objects.push(r);
+        this.currentGroup.objects.push(r);
         return r;
     }
 
@@ -65,28 +71,57 @@ class SVG {
         let p = new Path(start);
         p.stroke('black');
         p.fill('none');
-        this.objects.push(p);
+        this.currentGroup.objects.push(p);
         return p;
     }
 
+   setGroup(name: string){
+       let g = this.layers.get('name');
+       if(g === undefined){
+           g = makeGroup(name);
+           this.layers.set(name, g);
+       }
+       this.currentGroup = g;
+   }
+
     addChild(object: any): any {
-        this.objects.push(object);
+        this.currentGroup.objects.push(object);
         return object;
     }
 }
-export default {
-    SVG: SVG,
-    Point: Point,
-    Line: Line,
-    Rect: Rect,
-    Path: Path,
 
-    IN: INCH,
-    FT: FOOT,
-    MI: MILE,
-    MM: MILLIMETER,
-    CM: CENTIMETER,
-    M: METER,
-    KM: KILOMETER,
-
+function makeGroup(id: string): group {
+    return {id: id, objects: []};
 }
+
+type group = {
+    id: string,
+    objects: any[],
+}
+
+
+/*
+class Group {
+    id: string;
+
+    constructor(id: string, width: number, height: number, canvas: CanvasRenderingContext2D){
+        this.id = id;
+    }
+
+    draw(){
+        for(let object of this.objects){
+            object.draw(this.canvas)
+        }
+    }
+
+    exportSVG(): string {
+        const header = `<g inkscape:groupmode="layer" inkscape:label="${this.id}" id="${this.id}"}>`;
+        let body = '';
+        for(let object of this.objects){
+            body += object.exportSVG();
+        }
+        let footer = '</g>';
+        return header + body + footer
+    }
+}
+*/
