@@ -9,15 +9,28 @@ console.log(S);
 let start = new Plotted.Point(0, 0);
 let end = new Plotted.Point(100, 100);
 S.line(start, end);
-
 let corner = start.add(10);
-S.rect(corner, 20, 20).fill('green')
+const R = new Plotted.Rect(corner, 40, 40).fill('none').stroke('red');
+S.addChild(R)
 
 
-let path = S.path();
-path.moveTo(start);
-path.lineTo(new Point(100, 10));
-path.curveTo(S.center, end);
+
+
+let randomPoints = [];
+for(let i = 0; i < 5; i++){
+	randomPoints.push(new Point(Math.random() * 100, Math.random() * 100))
+}
+let longLine = new Plotted.Path(randomPoints).strokeWidth(2).fill('none').stroke('black');
+S.addChild(longLine);
+
+
+
+S.setGroup('overstuff');
+S.rect(corner.add(20), 40, 40).fill('orange').stroke('black');
+S.setGroup("more stuff")
+S.rect(corner.add(10), 40, 40).fill('none').stroke('blue');
+
+
 
 S.draw();
 window.drawing = S;
