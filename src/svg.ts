@@ -54,29 +54,27 @@ export class SVG {
 
     line(start, end): Line{
         let l = new Line(start, end);
-        l.stroke('black');
+        this.applyGroupStyle(l);
         this.currentGroup.objects.push(l);
         return l;
     }
 
     rect(pos: Point, width: number, height: number): Rect{
         let r = new Rect(pos, width, height);
-        r.stroke('black');
-        r.fill('none');
+        this.applyGroupStyle(r);
         this.currentGroup.objects.push(r);
         return r;
     }
 
     path(start?: Point): Path{
         let p = new Path(start);
-        p.stroke('black');
-        p.fill('none');
+        this.applyGroupStyle(p);
         this.currentGroup.objects.push(p);
         return p;
     }
 
    setGroup(name: string){
-       let g = this.layers.get('name');
+       let g = this.layers.get(name);
        if(g === undefined){
            g = makeGroup(name);
            this.layers.set(name, g);
@@ -84,19 +82,32 @@ export class SVG {
        this.currentGroup = g;
    }
 
-    addChild(object: any): any {
+   applyGroupStyle(object: any){
+       object.fill(this.currentGroup.fill);
+       object.stroke(this.currentGroup.stroke);
+   }
+
+   fill(fillStyle: string){
+        this.currentGroup.fill = fillStyle;
+   }
+
+   stroke(strokeStyle: string){
+       this.currentGroup.stroke = strokeStyle;
+   }
         this.currentGroup.objects.push(object);
         return object;
     }
 }
 
 function makeGroup(id: string): group {
-    return {id: id, objects: []};
+    return {id: id, objects: [], fill: 'none', stroke: 'black'};
 }
 
 type group = {
     id: string,
     objects: any[],
+    fill: string,
+    stroke: string,
 }
 
 
