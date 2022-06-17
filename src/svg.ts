@@ -94,6 +94,16 @@ export class SVG {
    stroke(strokeStyle: string){
        this.currentGroup.stroke = strokeStyle;
    }
+
+    addChild(object: any, layer?: string): any {
+        let group
+        if(layer !== undefined){
+            group = this.layers.get(layer);
+        }
+        //Default to the current group if no layer is passed, or the requested one does not exist
+        if(group === undefined){
+            group = this.currentGroup;
+        }
         this.currentGroup.objects.push(object);
         return object;
     }
