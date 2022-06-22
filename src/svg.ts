@@ -45,7 +45,6 @@ export class SVG {
 
     draw(){
         for(let layer of this.layers.values()){
-            console.log(`Drawing ${layer.id}...`);
             for(let object of layer.objects){
                 object.draw(this.canvas);
             }
