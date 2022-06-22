@@ -25,12 +25,16 @@ S.addChild(longLine);
 
 
 
+
 S.setGroup('overstuff');
-S.rect(corner.add(20), 40, 40).fill('orange').stroke('black');
+S.fill('orange');
+S.rect(corner.add(20), 40, 40).stroke('black');
 S.setGroup("more stuff")
 S.rect(corner.add(10), 40, 40).fill('none').stroke('blue');
 
-
+let path = S.path(S.origin);
+path.lineTo(S.center.add(new Point(-10, 0))).stroke('black').fill('none');
+path.addAttribute('id', 'testpath');
 
 S.draw();
 window.drawing = S;
