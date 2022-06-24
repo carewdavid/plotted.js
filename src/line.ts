@@ -15,6 +15,15 @@ export class Line extends Properties{
         return this.start.dist(this.end);
     }
 
+    /**
+     * Interpolate between the endpoints of the line
+     * @param fraction The amount to interpolate (0, 1)
+     * @returns The interpolated Point
+     */
+    lerp(fraction): Point{
+        return this.start.add(this.end.subtract(this.start).mult(fraction));
+    }
+
     exportSVG(): string{
         return `<line x1="${this.start.x}" y1="${this.start.y}" x2="${this.end.x}" y2="${this.end.y}" ${this.properties()}/>`
     }
