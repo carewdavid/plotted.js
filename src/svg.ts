@@ -13,6 +13,7 @@ export class SVG {
     canvas: CanvasRenderingContext2D;
     origin: Point;
     center: Point;
+    area: Rect;
 
     constructor(width: number, height: number, canvas: CanvasRenderingContext2D){
         this.width = width;
@@ -20,6 +21,7 @@ export class SVG {
         this.origin = new Point(0, 0);
         this.center = new Point(width / 2, height / 2);
         this.canvas = canvas;
+        this.area = new Rect(this.origin, width, height);
         //Intuitively, we'd have to use an array to store the layers since the order matters.
         //Fortuneately, javascript actually does define an ordering for elements of a map.
         //They're in order of insertion, just what we want.
