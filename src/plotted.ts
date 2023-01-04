@@ -3,6 +3,7 @@ import {Line} from './line';
 import {Rect} from './rect';
 import {Path} from './path';
 import {SVG} from './svg';
+import { Circle } from './circle';
 //Constants for physical distances
 const INCH: number = 96;
 const FOOT: number = INCH * 12;
@@ -25,4 +26,5 @@ export default {
     Line: Line,
     Rect: Rect,
     Path: Path,
+    Circle: Circle
 }

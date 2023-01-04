@@ -2,6 +2,7 @@ import {Point} from './point';
 import {Line} from './line';
 import {Rect} from './rect';
 import {Path} from './path';
+import {Circle} from './circle'
 //import {Group} from './group';
 
 export class SVG {
@@ -49,6 +50,13 @@ export class SVG {
                 object.draw(this.canvas);
             }
         }
+    }
+
+    circle(center, radius): Circle{
+        let c = new Circle(center, radius);
+        this.applyGroupStyle(c);
+        this.currentGroup.objects.push(c);
+        return c;
     }
 
     line(start, end): Line{
