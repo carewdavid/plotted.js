@@ -11,6 +11,7 @@ export class Rect extends Properties{
     ne: Point;
     se: Point;
     sw: Point;
+    center: Point;
     vertices: Point[];
 
 
@@ -29,6 +30,7 @@ export class Rect extends Properties{
         this.sw = position.add(vertical);
         this.se = position.add(horizontal).add(vertical);
         this.vertices = [this.nw, this.ne, this.se, this.sw];
+        this.center = position.add(vertical.mult(.5).add(horizontal.mult(.5)));
 
         this.strokePath = new Path(this.vertices).close();
         this.strokePath.attributes = this.attributes; //Send changes to our attributes to the underlying Path
