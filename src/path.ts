@@ -30,7 +30,16 @@ interface CloseCmd {
     kind: "close";
 }
 
-type PathCommand = MoveCmd | LineCmd | CurveCmd | BezierCmd | CloseCmd;
+interface ArcCmd {
+    kind: "arc";
+    target: Point;
+    radius: Point;
+    rotation: number;
+    largeFlag: boolean;
+    sweepFlag: boolean;
+}
+
+type PathCommand = MoveCmd | LineCmd | CurveCmd | BezierCmd | CloseCmd | ArcCmd;
 
 
 export class Path extends Properties{
@@ -57,15 +66,17 @@ export class Path extends Properties{
         let result = "";
         for(let cmd of this.commands){
             switch(cmd.kind){
-                case "move": result += `M ${cmd.target.x} ${cmd.target.y}`
+                case "move": result += `M ${cmd.target.x.toFixed(3)} ${cmd.target.y.toFixed(3)}`
                 break;
-                case "line": result += `L ${cmd.target.x} ${cmd.target.y}`
+                case "line": result += `L ${cmd.target.x.toFixed(3)} ${cmd.target.y.toFixed(3)}`
                 break;
-                case "curve": result += `Q ${cmd.control.x} ${cmd.control.y} ${cmd.target.x} ${cmd.target.y}`;
+                case "curve": result += `Q ${cmd.control.x.toFixed(3)} ${cmd.control.y.toFixed(3)} ${cmd.target.x.toFixed(3)} ${cmd.target.y.toFixed(3)}`;
                 break;
-                case "bezier": result += `C ${cmd.control1.x} ${cmd.control1.y} ${cmd.control2.x} ${cmd.control2.y} ${cmd.target.x} ${cmd.target.y}`;
+                case "bezier": result += `C ${cmd.control1.x.toFixed(3)} ${cmd.control1.y.toFixed(3)} ${cmd.control2.x.toFixed(3)} ${cmd.control2.y.toFixed(3)} ${cmd.target.x.toFixed(3)} ${cmd.target.y.toFixed(3)}`;
                 break;
                 case "close": result += 'Z';
+                break;
+                case "arc": result += `A ${cmd.radius.x} ${cmd.radius.y} ${cmd.rotation} ${cmd.largeFlag ? 1 : 0} ${cmd.sweepFlag ? 1 : 0} ${cmd.target.x.toFixed(3)} ${cmd.target.y.toFixed(3)}`;
             }
         }
 
@@ -117,6 +128,11 @@ export class Path extends Properties{
         this.vertices.push(target);
         this.commands.push({kind: "bezier", target: target, control1: control1, control2: control2});
         return this;
+    }
+
+    arcTo(rx: number, ry: number, rotation: number, largeFlag: boolean, sweepFlag: boolean, target: Point){
+        this.vertices.push(target);
+        this.commands.push({kind: "arc", target: target, rotation: rotation, radius: new Point(rx, ry), largeFlag: largeFlag, sweepFlag: sweepFlag});
     }
 
     close(): Path{
