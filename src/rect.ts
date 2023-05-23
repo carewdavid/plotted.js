@@ -36,6 +36,10 @@ export class Rect extends Properties{
         this.strokePath.attributes = this.attributes; //Send changes to our attributes to the underlying Path
     }
 
+    contains(p: Point): boolean{
+	return p.x >= this.nw.x && p.x <= this.ne.x && p.y >= this.nw.y && p.y <= this.sw.y;
+    }
+
     exportSVG(): string{
         return `<rect x="${this.position.x}" y="${this.position.y}" width="${this.width}" height="${this.height}" ${this.properties()}/>`
     }
