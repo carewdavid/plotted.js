@@ -24,7 +24,7 @@ export class Properties{
 
     /**Set stroke width */
     strokeWidth(width: number): Properties{
-        this.attributes.set('strokeWidth', width.toString());
+        this.attributes.set('stroke-width', width.toString());
         return this;
     }
 

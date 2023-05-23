@@ -19,7 +19,7 @@ export class Circle extends Properties {
 
     draw(canvas: CanvasRenderingContext2D) {
         let fill = this.attributes.get('fill') || 'none';
-        //canvas.lineWidth = Number.parseFloat(this.attributes.get('strokeWidth')) || 1;
+        //canvas.lineWidth = Number.parseFloat(this.attributes.get('stroke-width')) || 1;
         if(fill !== 'none'){
         canvas.fillStyle = fill;
         canvas.beginPath();
