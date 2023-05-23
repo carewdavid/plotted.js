@@ -89,7 +89,7 @@ export class Path extends Properties{
 
     draw(canvas: CanvasRenderingContext2D){
         canvas.strokeStyle = this.attributes.get("stroke") || 'black';
-        canvas.lineWidth = Number.parseFloat(this.attributes.get("strokeWidth")) || 1;
+        canvas.lineWidth = Number.parseFloat(this.attributes.get("stroke-width")) || 1;
         this.path = new Path2D(this._renderCommands());
         canvas.stroke(this.path);
         const fill = this.attributes.get('fill') || 'none';
