@@ -34,12 +34,15 @@ export class SVG {
     exportSVG(): string {
         let header = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="${this.width}" height="${this.height}">`;
         let body = '';
+        let layerNo = 0;
         for(let [_, layer] of this.layers){
-            let groupString = `<g inkscape:groupmode="layer" inkscape:label="${layer.id}" id="${layer.id}">`
+            const layerName = `${layerNo}${layer.id}`;
+            let groupString = `<g inkscape:groupmode="layer" inkscape:label="${layerName}" id="${layerName}">`
             for(let object of layer.objects){
                 groupString += object.exportSVG();
             }
             groupString += '</g>';
+            layerNo++;
             body += groupString;
         }
         let footer = '</svg>';
